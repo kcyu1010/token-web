@@ -5,15 +5,15 @@
         <span>当前JWSESSION</span>
       </div>
       <div class="text item">
-        {{ oldToken }}
+        {{ data.token }}
         <el-divider></el-divider>
         <div slot="header" class="clearfix">
-          <span>更新时间：{{ updateTime }}</span>
+          <span>更新时间：{{ data.lastupdatetime | timeToString }}</span>
         </div>
       </div>
     </el-card>
     <el-form :model="token" :rules="rules" ref="token">
-      <el-form-item label="提交新Token" prop="token">
+      <el-form-item label="提交新JWSESSION" prop="token">
         <el-input v-model="token.token"/>
       </el-form-item>
       <el-button @click="handleSubmit" type="primary" style="width: 100%">
@@ -22,21 +22,28 @@
     </el-form>
     <div class="token-status">
       <span>状态：</span>
-      <el-tag type="danger" v-if="status === 0">Token过期</el-tag>
-      <el-tag type="success" v-if="status === 1">Token正常</el-tag>
-      <el-tag type="warning" v-if="status === 2">Token已更新，待验证</el-tag>
+      <el-tag type="danger" v-if="data.status === 0">令牌过期</el-tag>
+      <el-tag type="success" v-if="data.status === 1">令牌正常</el-tag>
+      <el-tag type="warning" v-if="data.status === 2">令牌已更新，待验证</el-tag>
       <span style="display: inline-block;width: 20px;"></span>
-      <el-tag type="danger" v-if="isCheck === 0">已停用</el-tag>
-      <el-tag type="success" v-if="isCheck === 1">正常启用中</el-tag>
+      <el-tag type="danger" v-if="data.isCheck === 0">已停用</el-tag>
+      <el-tag type="success" v-if="data.isCheck === 1">正常启用中</el-tag>
+      <span style="display: inline-block;width: 20px;"></span>
+      <el-button size="small" type="primary" @click="verifyToken" :disabled="data.status !== 2">验证</el-button>
     </div>
-
   </div>
 </template>
 
 <script>
-import {getUserByName,updateToken} from "@/api/token";
+import {updateToken, verifyToken} from "@/api/token";
 export default {
   name: "Token",
+  props:{
+    data:{
+      type: Object,
+      default: ()=>{return {}}
+    }
+  },
   data() {
     var validateToken = (rule, value, callback) => {
       const patt = /^[a-z0-9]{32}$/i;
@@ -48,10 +55,6 @@ export default {
       }
     }
     return {
-      oldToken:'',
-      status: '',
-      isCheck: '',
-      updateTime: '',
       token: {
         token: ''
       },
@@ -86,16 +89,18 @@ export default {
       })
     },
     initData(){
-      getUserByName(this.$route.params.name).then((res)=>{
-        this.oldToken = res.message.token
-        this.status = res.message.status
-        this.updateTime = res.message.updateTime
-        this.isCheck = res.message.isCheck
+      this.$emit('freshData')
+    },
+    verifyToken(){
+      verifyToken(this.data.token,this.$route.params.name).then((res)=>{
+        if(res.code === 200){
+          this.$message.success(res.message)
+          this.initData()
+        } else {
+          this.$message.error(res.message)
+        }
       })
     }
-  },
-  created() {
-    this.initData()
   }
 }
 </script>

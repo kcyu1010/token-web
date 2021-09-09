@@ -14,3 +14,26 @@ export function updateToken(data) {
     data
   })
 }
+
+export function getHistory(name) {
+  return request({
+    url: '/historyTable/getHistoryByname/'+name,
+    method: 'get'
+  })
+}
+
+export function updateIsCheck(data) {
+  return request({
+    url: '/token/updateIsCheck',
+    method: 'post',
+    data
+  })
+}
+
+
+export function verifyToken(token,who) {
+  return request({
+    url: '/token/verifyToken/'+token+'/'+who,
+    method: 'get'
+  })
+}

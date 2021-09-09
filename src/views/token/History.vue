@@ -7,13 +7,13 @@
       <el-table-column
         prop="token"
         label="历史Token"
-        width="100px"
       >
       </el-table-column>
       <el-table-column
-        prop="updateTime"
+        prop="changedate"
         label="更新时间"
       >
+        <template slot-scope="scope">{{ scope.row.changedate | timeToString }}</template>
       </el-table-column>
     </el-table>
   </div>
@@ -24,7 +24,7 @@ export default {
   name: "History",
   props:{
     tableData:{
-      default : {},
+      default : ()=>{return {}},
       type: Object
     }
   },
