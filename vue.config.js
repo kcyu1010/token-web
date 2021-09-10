@@ -41,9 +41,9 @@ module.exports = {
         target: "http://43.246.213.36:9010",
         changeOrigin: true,
         secure: false,
-        pathRewrite: {
-          '^/api': ''
-        }
+        // pathRewrite: {
+        //   '^/api': ''
+        // }
       }
     }
     // }
