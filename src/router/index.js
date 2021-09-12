@@ -63,7 +63,28 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/register',
+    component: Layout,
+    children: [
+      {
+        path: "/register",
+        component: () => import('@/views/token/Register'),
+        meta: {title: '注册', icon: 'el-icon-s-check'}
+      }
+    ]
+  },
+  {
+    path: '/showAll',
+    component: Layout,
+    children: [
+      {
+        path: "/showAll",
+        component: () => import('@/views/token/ShowAll'),
+        meta: {title: '用户列表', icon: 'el-icon-s-check'}
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,

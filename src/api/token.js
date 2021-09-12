@@ -37,3 +37,18 @@ export function verifyToken(token,who) {
     method: 'get'
   })
 }
+
+export function addToken(data) {
+  return request({
+    url: '/token/save',
+    method: 'post',
+    data
+  })
+}
+
+export function getAllToken() {
+  return request({
+    url: '/token/getAll',
+    method: 'get'
+  })
+}

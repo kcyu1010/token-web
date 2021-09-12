@@ -39,11 +39,12 @@ module.exports = {
     proxy: {
       "/api": {
         target: "http://43.246.213.36:9010",
+        // target: "http://127.0.0.1:9010",
         changeOrigin: true,
         secure: false,
-        // pathRewrite: {
-        //   '^/api': ''
-        // }
+        pathRewrite: {
+          '^/api': '/api'
+        }
       }
     }
     // }

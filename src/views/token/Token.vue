@@ -8,7 +8,7 @@
         {{ data.token }}
         <el-divider></el-divider>
         <div slot="header" class="clearfix">
-          <span>更新时间：{{ data.lastupdatetime | timeToString }}</span>
+          <span>更新时间：{{ data.lastupdatetime }}</span>
         </div>
       </div>
     </el-card>

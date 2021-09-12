@@ -13,7 +13,6 @@
         prop="changedate"
         label="更新时间"
       >
-        <template slot-scope="scope">{{ scope.row.changedate | timeToString }}</template>
       </el-table-column>
     </el-table>
   </div>
