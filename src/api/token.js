@@ -52,3 +52,17 @@ export function getAllToken() {
     method: 'get'
   })
 }
+
+export function getRecordsRow() {
+  return request({
+    url: '/checkTable/getRecordsRow',
+    method: 'get'
+  })
+}
+
+export function getRecordsByName(data) {
+  return request({
+    url: '/checkTable/getRecordsByName/'+data,
+    method: 'get'
+  })
+}
